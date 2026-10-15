@@ -1,0 +1,357 @@
+==========================================
+search [1] in COUPLED-BRS-TRAMWAY-CHECK : initProtected =>* S such that
+    collision?(S) = true .
+
+No solution.
+states: 1355  rewrites: 9498 in 8ms cpu (5ms real) (1187250 rewrites/second)
+==========================================
+search [1] in COUPLED-BRS-TRAMWAY-CHECK : initUnprotected =>* S such that
+    collision?(S) = true .
+
+Solution 1 (state 100)
+states: 101  rewrites: 335 in 0ms cpu (0ms real) (~ rewrites/second)
+S --> st(unprotected, x, x, s1, s2, noObs, noObs, false, false, noHeld, false,
+    false, false, false, unknown, unknown)
+M1
+M2
+E1-unsafe
+E2-unsafe
+==========================================
+search [1] in COUPLED-BRS-TRAMWAY-CHECK : initProtected =>* S such that
+    mismatch?(S) = true .
+
+Solution 1 (state 1)
+states: 2  rewrites: 15 in 0ms cpu (0ms real) (~ rewrites/second)
+S --> st(protected, a1, s2, s1, s2, noObs, noObs, false, false, noHeld, false,
+    false, false, false, unknown, unknown)
+M1
+==========================================
+search [1] in COUPLED-BRS-TRAMWAY-CHECK : st(protected, a1, s2, s1, s2, noObs,
+    noObs, false, false, noHeld, false, false, false, false, unknown, unknown)
+    =>* S such that posCons?(S) = true .
+
+Solution 1 (state 12)
+states: 13  rewrites: 29 in 0ms cpu (0ms real) (~ rewrites/second)
+S --> st(protected, a1, s2, a1, s2, noObs, noObs, false, false, noHeld, false,
+    false, false, false, known(a1), unknown)
+H1-empty-0
+D1
+==========================================
+search [1] in COUPLED-BRS-TRAMWAY-CHECK : initProtected =>! S .
+
+No solution.
+states: 1355  rewrites: 8143 in 4ms cpu (4ms real) (2035750 rewrites/second)
+==========================================
+search [1] in COUPLED-BRS-TRAMWAY-CHECK : initUnprotected =>! S .
+
+No solution.
+states: 6675  rewrites: 39121 in 28ms cpu (26ms real) (1397178 rewrites/second)
+==========================================
+reduce in COUPLED-BRS-TRAMWAY-CHECK : modelCheck(initProtected, []~ collision)
+    .
+rewrites: 10858 in 8ms cpu (6ms real) (1357250 rewrites/second)
+result Bool: true
+==========================================
+reduce in COUPLED-BRS-TRAMWAY-CHECK : modelCheck(initUnprotected, []~
+    collision) .
+rewrites: 422 in 0ms cpu (0ms real) (~ rewrites/second)
+result ModelCheckResult: counterexample({st(unprotected, s1, s2, s1, s2, noObs,
+    noObs, false, false, noHeld, false, false, false, false, unknown, unknown),
+    'M1} {st(unprotected, a1, s2, s1, s2, noObs, noObs, false, false, noHeld,
+    false, false, false, false, unknown, unknown), 'M2} {st(unprotected, a1,
+    a2, s1, s2, noObs, noObs, false, false, noHeld, false, false, false, false,
+    unknown, unknown), 'H1-empty-0} {st(unprotected, a1, a2, s1, s2, obs(a1,
+    b0), noObs, false, false, noHeld, false, false, false, false, unknown,
+    unknown), 'H1-use-1} {st(unprotected, a1, a2, s1, s2, obs(a1, b1), noObs,
+    false, false, noHeld, false, false, false, false, unknown, unknown),
+    'H2-empty-0} {st(unprotected, a1, a2, s1, s2, obs(a1, b1), obs(a2, b0),
+    false, false, noHeld, false, false, false, false, unknown, unknown),
+    'H1-use-0} {st(unprotected, a1, a2, s1, s2, obs(a1, b0), obs(a2, b0),
+    false, false, noHeld, false, false, false, false, unknown, unknown),
+    'H2-use-1} {st(unprotected, a1, a2, s1, s2, obs(a1, b0), obs(a2, b1),
+    false, false, noHeld, false, false, false, false, unknown, unknown),
+    'H1-use-1} {st(unprotected, a1, a2, s1, s2, obs(a1, b1), obs(a2, b1),
+    false, false, noHeld, false, false, false, false, unknown, unknown),
+    'D1-alt} {st(unprotected, a1, a2, a1, s2, noObs, obs(a2, b1), false, false,
+    noHeld, false, false, false, false, known(a1), unknown), 'H1-empty-0} {st(
+    unprotected, a1, a2, a1, s2, obs(a1, b0), obs(a2, b1), false, false,
+    noHeld, false, false, false, false, known(a1), unknown), 'H1-use-1} {st(
+    unprotected, a1, a2, a1, s2, obs(a1, b1), obs(a2, b1), false, false,
+    noHeld, false, false, false, false, known(a1), unknown), 'H2-use-0} {st(
+    unprotected, a1, a2, a1, s2, obs(a1, b1), obs(a2, b0), false, false,
+    noHeld, false, false, false, false, known(a1), unknown), 'H1-use-0} {st(
+    unprotected, a1, a2, a1, s2, obs(a1, b0), obs(a2, b0), false, false,
+    noHeld, false, false, false, false, known(a1), unknown), 'D1} {st(
+    unprotected, a1, a2, a1, s2, noObs, obs(a2, b0), false, false, noHeld,
+    false, false, false, false, known(a1), unknown), 'D2} {st(unprotected, a1,
+    a2, a1, a2, noObs, noObs, false, false, noHeld, false, false, false, false,
+    known(a1), known(a2)), 'H1-empty-0} {st(unprotected, a1, a2, a1, a2, obs(
+    a1, b0), noObs, false, false, noHeld, false, false, false, false, known(
+    a1), known(a2)), 'H1-use-1} {st(unprotected, a1, a2, a1, a2, obs(a1, b1),
+    noObs, false, false, noHeld, false, false, false, false, known(a1), known(
+    a2)), 'H2-empty-0} {st(unprotected, a1, a2, a1, a2, obs(a1, b1), obs(a2,
+    b0), false, false, noHeld, false, false, false, false, known(a1), known(
+    a2)), 'H1-use-0} {st(unprotected, a1, a2, a1, a2, obs(a1, b0), obs(a2, b0),
+    false, false, noHeld, false, false, false, false, known(a1), known(a2)),
+    'H2-use-1} {st(unprotected, a1, a2, a1, a2, obs(a1, b0), obs(a2, b1),
+    false, false, noHeld, false, false, false, false, known(a1), known(a2)),
+    'H1-use-1} {st(unprotected, a1, a2, a1, a2, obs(a1, b1), obs(a2, b1),
+    false, false, noHeld, false, false, false, false, known(a1), known(a2)),
+    'D1-alt} {st(unprotected, a1, a2, a1, a2, noObs, obs(a2, b1), false, false,
+    noHeld, false, false, false, false, known(a1), known(a2)), 'H2-use-0} {st(
+    unprotected, a1, a2, a1, a2, noObs, obs(a2, b0), false, false, noHeld,
+    false, false, false, false, known(a1), known(a2)), 'Q1} {st(unprotected,
+    a1, a2, a1, a2, noObs, obs(a2, b0), true, false, noHeld, true, false,
+    false, false, known(a1), known(a2)), 'H1-empty-0} {st(unprotected, a1, a2,
+    a1, a2, obs(a1, b0), obs(a2, b0), true, false, noHeld, true, false, false,
+    false, known(a1), known(a2)), 'H1-use-1} {st(unprotected, a1, a2, a1, a2,
+    obs(a1, b1), obs(a2, b0), true, false, noHeld, true, false, false, false,
+    known(a1), known(a2)), 'H2-use-1} {st(unprotected, a1, a2, a1, a2, obs(a1,
+    b1), obs(a2, b1), true, false, noHeld, true, false, false, false, known(
+    a1), known(a2)), 'H1-use-0} {st(unprotected, a1, a2, a1, a2, obs(a1, b0),
+    obs(a2, b1), true, false, noHeld, true, false, false, false, known(a1),
+    known(a2)), 'D1} {st(unprotected, a1, a2, a1, a2, noObs, obs(a2, b1), true,
+    false, noHeld, true, false, false, false, known(a1), known(a2)), 'D2-alt} {
+    st(unprotected, a1, a2, a1, a2, noObs, noObs, true, false, noHeld, true,
+    false, false, false, known(a1), known(a2)), 'H1-empty-0} {st(unprotected,
+    a1, a2, a1, a2, obs(a1, b0), noObs, true, false, noHeld, true, false,
+    false, false, known(a1), known(a2)), 'H1-use-1} {st(unprotected, a1, a2,
+    a1, a2, obs(a1, b1), noObs, true, false, noHeld, true, false, false, false,
+    known(a1), known(a2)), 'Q2} {st(unprotected, a1, a2, a1, a2, obs(a1, b1),
+    noObs, true, true, noHeld, true, true, false, false, known(a1), known(a2)),
+    'H1-use-0} {st(unprotected, a1, a2, a1, a2, obs(a1, b0), noObs, true, true,
+    noHeld, true, true, false, false, known(a1), known(a2)), 'H2-empty-0} {st(
+    unprotected, a1, a2, a1, a2, obs(a1, b0), obs(a2, b0), true, true, noHeld,
+    true, true, false, false, known(a1), known(a2)), 'H1-use-1} {st(
+    unprotected, a1, a2, a1, a2, obs(a1, b1), obs(a2, b0), true, true, noHeld,
+    true, true, false, false, known(a1), known(a2)), 'H2-use-1} {st(
+    unprotected, a1, a2, a1, a2, obs(a1, b1), obs(a2, b1), true, true, noHeld,
+    true, true, false, false, known(a1), known(a2)), 'H1-use-0} {st(
+    unprotected, a1, a2, a1, a2, obs(a1, b0), obs(a2, b1), true, true, noHeld,
+    true, true, false, false, known(a1), known(a2)), 'D1} {st(unprotected, a1,
+    a2, a1, a2, noObs, obs(a2, b1), true, true, noHeld, true, true, false,
+    false, known(a1), known(a2)), 'H2-use-0} {st(unprotected, a1, a2, a1, a2,
+    noObs, obs(a2, b0), true, true, noHeld, true, true, false, false, known(
+    a1), known(a2)), 'D2} {st(unprotected, a1, a2, a1, a2, noObs, noObs, true,
+    true, noHeld, true, true, false, false, known(a1), known(a2)), 'A1} {st(
+    unprotected, a1, a2, a1, a2, noObs, noObs, false, true, noHeld, true, true,
+    true, false, known(a1), known(a2)), 'H1-empty-0} {st(unprotected, a1, a2,
+    a1, a2, obs(a1, b0), noObs, false, true, noHeld, true, true, true, false,
+    known(a1), known(a2)), 'H1-use-1} {st(unprotected, a1, a2, a1, a2, obs(a1,
+    b1), noObs, false, true, noHeld, true, true, true, false, known(a1), known(
+    a2)), 'H2-empty-0} {st(unprotected, a1, a2, a1, a2, obs(a1, b1), obs(a2,
+    b0), false, true, noHeld, true, true, true, false, known(a1), known(a2)),
+    'H1-use-0} {st(unprotected, a1, a2, a1, a2, obs(a1, b0), obs(a2, b0),
+    false, true, noHeld, true, true, true, false, known(a1), known(a2)),
+    'H2-use-1} {st(unprotected, a1, a2, a1, a2, obs(a1, b0), obs(a2, b1),
+    false, true, noHeld, true, true, true, false, known(a1), known(a2)),
+    'H1-use-1} {st(unprotected, a1, a2, a1, a2, obs(a1, b1), obs(a2, b1),
+    false, true, noHeld, true, true, true, false, known(a1), known(a2)),
+    'D1-alt} {st(unprotected, a1, a2, a1, a2, noObs, obs(a2, b1), false, true,
+    noHeld, true, true, true, false, known(a1), known(a2)), 'H2-use-0} {st(
+    unprotected, a1, a2, a1, a2, noObs, obs(a2, b0), false, true, noHeld, true,
+    true, true, false, known(a1), known(a2)), 'A2} {st(unprotected, a1, a2, a1,
+    a2, noObs, obs(a2, b0), false, false, noHeld, true, true, true, true,
+    known(a1), known(a2)), 'H1-empty-0} {st(unprotected, a1, a2, a1, a2, obs(
+    a1, b0), obs(a2, b0), false, false, noHeld, true, true, true, true, known(
+    a1), known(a2)), 'H1-use-1} {st(unprotected, a1, a2, a1, a2, obs(a1, b1),
+    obs(a2, b0), false, false, noHeld, true, true, true, true, known(a1),
+    known(a2)), 'H2-use-1} {st(unprotected, a1, a2, a1, a2, obs(a1, b1), obs(
+    a2, b1), false, false, noHeld, true, true, true, true, known(a1), known(
+    a2)), 'H1-use-0} {st(unprotected, a1, a2, a1, a2, obs(a1, b0), obs(a2, b1),
+    false, false, noHeld, true, true, true, true, known(a1), known(a2)), 'D1} {
+    st(unprotected, a1, a2, a1, a2, noObs, obs(a2, b1), false, false, noHeld,
+    true, true, true, true, known(a1), known(a2)), 'D2-alt} {st(unprotected,
+    a1, a2, a1, a2, noObs, noObs, false, false, noHeld, true, true, true, true,
+    known(a1), known(a2)), 'H1-empty-0} {st(unprotected, a1, a2, a1, a2, obs(
+    a1, b0), noObs, false, false, noHeld, true, true, true, true, known(a1),
+    known(a2)), 'H1-use-1} {st(unprotected, a1, a2, a1, a2, obs(a1, b1), noObs,
+    false, false, noHeld, true, true, true, true, known(a1), known(a2)), 'B1} {
+    st(unprotected, a1, a2, a1, a2, obs(a1, b1), noObs, false, false, held(t1),
+    true, true, true, true, known(a1), known(a2)), 'H1-use-0} {st(unprotected,
+    a1, a2, a1, a2, obs(a1, b0), noObs, false, false, held(t1), true, true,
+    true, true, known(a1), known(a2)), 'H2-empty-0} {st(unprotected, a1, a2,
+    a1, a2, obs(a1, b0), obs(a2, b0), false, false, held(t1), true, true, true,
+    true, known(a1), known(a2)), 'H1-use-1} {st(unprotected, a1, a2, a1, a2,
+    obs(a1, b1), obs(a2, b0), false, false, held(t1), true, true, true, true,
+    known(a1), known(a2)), 'H2-use-1} {st(unprotected, a1, a2, a1, a2, obs(a1,
+    b1), obs(a2, b1), false, false, held(t1), true, true, true, true, known(
+    a1), known(a2)), 'H1-use-0} {st(unprotected, a1, a2, a1, a2, obs(a1, b0),
+    obs(a2, b1), false, false, held(t1), true, true, true, true, known(a1),
+    known(a2)), 'D1} {st(unprotected, a1, a2, a1, a2, noObs, obs(a2, b1),
+    false, false, held(t1), true, true, true, true, known(a1), known(a2)),
+    'H2-use-0} {st(unprotected, a1, a2, a1, a2, noObs, obs(a2, b0), false,
+    false, held(t1), true, true, true, true, known(a1), known(a2)), 'D2} {st(
+    unprotected, a1, a2, a1, a2, noObs, noObs, false, false, held(t1), true,
+    true, true, true, known(a1), known(a2)), 'E1-unsafe} {st(unprotected, x,
+    a2, a1, a2, noObs, noObs, false, false, held(t1), true, true, true, true,
+    known(a1), known(a2)), 'H1-empty-0} {st(unprotected, x, a2, a1, a2, obs(x,
+    b0), noObs, false, false, held(t1), true, true, true, true, known(a1),
+    known(a2)), 'H1-use-1} {st(unprotected, x, a2, a1, a2, obs(x, b1), noObs,
+    false, false, held(t1), true, true, true, true, known(a1), known(a2)),
+    'H2-empty-0} {st(unprotected, x, a2, a1, a2, obs(x, b1), obs(a2, b0),
+    false, false, held(t1), true, true, true, true, known(a1), known(a2)),
+    'H1-use-0} {st(unprotected, x, a2, a1, a2, obs(x, b0), obs(a2, b0), false,
+    false, held(t1), true, true, true, true, known(a1), known(a2)), 'H2-use-1}
+    {st(unprotected, x, a2, a1, a2, obs(x, b0), obs(a2, b1), false, false,
+    held(t1), true, true, true, true, known(a1), known(a2)), 'H1-use-1} {st(
+    unprotected, x, a2, a1, a2, obs(x, b1), obs(a2, b1), false, false, held(
+    t1), true, true, true, true, known(a1), known(a2)), 'D1-alt} {st(
+    unprotected, x, a2, x, a2, noObs, obs(a2, b1), false, false, held(t1),
+    true, true, true, true, known(x), known(a2)), 'H1-empty-0} {st(unprotected,
+    x, a2, x, a2, obs(x, b0), obs(a2, b1), false, false, held(t1), true, true,
+    true, true, known(x), known(a2)), 'H1-use-1} {st(unprotected, x, a2, x, a2,
+    obs(x, b1), obs(a2, b1), false, false, held(t1), true, true, true, true,
+    known(x), known(a2)), 'H2-use-0} {st(unprotected, x, a2, x, a2, obs(x, b1),
+    obs(a2, b0), false, false, held(t1), true, true, true, true, known(x),
+    known(a2)), 'H1-use-0} {st(unprotected, x, a2, x, a2, obs(x, b0), obs(a2,
+    b0), false, false, held(t1), true, true, true, true, known(x), known(a2)),
+    'D1} {st(unprotected, x, a2, x, a2, noObs, obs(a2, b0), false, false, held(
+    t1), true, true, true, true, known(x), known(a2)), 'D2} {st(unprotected, x,
+    a2, x, a2, noObs, noObs, false, false, held(t1), true, true, true, true,
+    known(x), known(a2)), 'H1-empty-0} {st(unprotected, x, a2, x, a2, obs(x,
+    b0), noObs, false, false, held(t1), true, true, true, true, known(x),
+    known(a2)), 'H1-use-1} {st(unprotected, x, a2, x, a2, obs(x, b1), noObs,
+    false, false, held(t1), true, true, true, true, known(x), known(a2)),
+    'E2-unsafe} {st(unprotected, x, x, x, a2, obs(x, b1), noObs, false, false,
+    held(t1), true, true, true, true, known(x), known(a2)), 'H1-use-0} {st(
+    unprotected, x, x, x, a2, obs(x, b0), noObs, false, false, held(t1), true,
+    true, true, true, known(x), known(a2)), 'H2-empty-0} {st(unprotected, x, x,
+    x, a2, obs(x, b0), obs(x, b0), false, false, held(t1), true, true, true,
+    true, known(x), known(a2)), 'H1-use-1} {st(unprotected, x, x, x, a2, obs(x,
+    b1), obs(x, b0), false, false, held(t1), true, true, true, true, known(x),
+    known(a2)), 'H2-use-1} {st(unprotected, x, x, x, a2, obs(x, b1), obs(x,
+    b1), false, false, held(t1), true, true, true, true, known(x), known(a2)),
+    'H1-use-0} {st(unprotected, x, x, x, a2, obs(x, b0), obs(x, b1), false,
+    false, held(t1), true, true, true, true, known(x), known(a2)), 'D1} {st(
+    unprotected, x, x, x, a2, noObs, obs(x, b1), false, false, held(t1), true,
+    true, true, true, known(x), known(a2)), 'H2-use-0} {st(unprotected, x, x,
+    x, a2, noObs, obs(x, b0), false, false, held(t1), true, true, true, true,
+    known(x), known(a2)), 'D2} {st(unprotected, x, x, x, x, noObs, noObs,
+    false, false, held(t1), true, true, true, true, known(x), known(x)),
+    'H1-empty-0} {st(unprotected, x, x, x, x, obs(x, b0), noObs, false, false,
+    held(t1), true, true, true, true, known(x), known(x)), 'H1-use-1} {st(
+    unprotected, x, x, x, x, obs(x, b1), noObs, false, false, held(t1), true,
+    true, true, true, known(x), known(x)), 'H2-empty-0} {st(unprotected, x, x,
+    x, x, obs(x, b1), obs(x, b0), false, false, held(t1), true, true, true,
+    true, known(x), known(x)), 'H1-use-0} {st(unprotected, x, x, x, x, obs(x,
+    b0), obs(x, b0), false, false, held(t1), true, true, true, true, known(x),
+    known(x)), 'H2-use-1} {st(unprotected, x, x, x, x, obs(x, b0), obs(x, b1),
+    false, false, held(t1), true, true, true, true, known(x), known(x)),
+    'H1-use-1} {st(unprotected, x, x, x, x, obs(x, b1), obs(x, b1), false,
+    false, held(t1), true, true, true, true, known(x), known(x)), 'D1-alt} {st(
+    unprotected, x, x, x, x, noObs, obs(x, b1), false, false, held(t1), true,
+    true, true, true, known(x), known(x)), 'H2-use-0} {st(unprotected, x, x, x,
+    x, noObs, obs(x, b0), false, false, held(t1), true, true, true, true,
+    known(x), known(x)), 'X1} {st(unprotected, a2, x, x, x, noObs, obs(x, b0),
+    false, false, noHeld, true, true, false, true, known(x), known(x)),
+    'H1-empty-0} {st(unprotected, a2, x, x, x, obs(a2, b0), obs(x, b0), false,
+    false, noHeld, true, true, false, true, known(x), known(x)), 'H1-use-1} {
+    st(unprotected, a2, x, x, x, obs(a2, b1), obs(x, b0), false, false, noHeld,
+    true, true, false, true, known(x), known(x)), 'H2-use-1} {st(unprotected,
+    a2, x, x, x, obs(a2, b1), obs(x, b1), false, false, noHeld, true, true,
+    false, true, known(x), known(x)), 'H1-use-0} {st(unprotected, a2, x, x, x,
+    obs(a2, b0), obs(x, b1), false, false, noHeld, true, true, false, true,
+    known(x), known(x)), 'D1} {st(unprotected, a2, x, a2, x, noObs, obs(x, b1),
+    false, false, noHeld, true, true, false, true, known(a2), known(x)),
+    'H1-empty-0} {st(unprotected, a2, x, a2, x, obs(a2, b0), obs(x, b1), false,
+    false, noHeld, true, true, false, true, known(a2), known(x)), 'H1-use-1} {
+    st(unprotected, a2, x, a2, x, obs(a2, b1), obs(x, b1), false, false,
+    noHeld, true, true, false, true, known(a2), known(x)), 'H2-use-0} {st(
+    unprotected, a2, x, a2, x, obs(a2, b1), obs(x, b0), false, false, noHeld,
+    true, true, false, true, known(a2), known(x)), 'H1-use-0} {st(unprotected,
+    a2, x, a2, x, obs(a2, b0), obs(x, b0), false, false, noHeld, true, true,
+    false, true, known(a2), known(x)), 'D1} {st(unprotected, a2, x, a2, x,
+    noObs, obs(x, b0), false, false, noHeld, true, true, false, true, known(
+    a2), known(x)), 'D2} {st(unprotected, a2, x, a2, x, noObs, noObs, false,
+    false, noHeld, true, true, false, true, known(a2), known(x)), 'H1-empty-0},
+    {st(unprotected, a2, x, a2, x, obs(a2, b0), noObs, false, false, noHeld,
+    true, true, false, true, known(a2), known(x)), 'H1-use-1} {st(unprotected,
+    a2, x, a2, x, obs(a2, b1), noObs, false, false, noHeld, true, true, false,
+    true, known(a2), known(x)), 'H1-use-0})
+==========================================
+reduce in COUPLED-BRS-TRAMWAY-CHECK : modelCheck(initProtected, [](mismatch ->
+    <> posCons)) .
+rewrites: 212 in 0ms cpu (0ms real) (~ rewrites/second)
+result ModelCheckResult: counterexample({st(protected, s1, s2, s1, s2, noObs,
+    noObs, false, false, noHeld, false, false, false, false, unknown, unknown),
+    'M1} {st(protected, a1, s2, s1, s2, noObs, noObs, false, false, noHeld,
+    false, false, false, false, unknown, unknown), 'M2} {st(protected, a1, a2,
+    s1, s2, noObs, noObs, false, false, noHeld, false, false, false, false,
+    unknown, unknown), 'H1-empty-0} {st(protected, a1, a2, s1, s2, obs(a1, b0),
+    noObs, false, false, noHeld, false, false, false, false, unknown, unknown),
+    'H1-use-1} {st(protected, a1, a2, s1, s2, obs(a1, b1), noObs, false, false,
+    noHeld, false, false, false, false, unknown, unknown), 'H2-empty-0} {st(
+    protected, a1, a2, s1, s2, obs(a1, b1), obs(a2, b0), false, false, noHeld,
+    false, false, false, false, unknown, unknown), 'H1-use-0} {st(protected,
+    a1, a2, s1, s2, obs(a1, b0), obs(a2, b0), false, false, noHeld, false,
+    false, false, false, unknown, unknown), 'H2-use-1} {st(protected, a1, a2,
+    s1, s2, obs(a1, b0), obs(a2, b1), false, false, noHeld, false, false,
+    false, false, unknown, unknown), 'H1-use-1} {st(protected, a1, a2, s1, s2,
+    obs(a1, b1), obs(a2, b1), false, false, noHeld, false, false, false, false,
+    unknown, unknown), 'D1-alt} {st(protected, a1, a2, a1, s2, noObs, obs(a2,
+    b1), false, false, noHeld, false, false, false, false, known(a1), unknown),
+    'H1-empty-0} {st(protected, a1, a2, a1, s2, obs(a1, b0), obs(a2, b1),
+    false, false, noHeld, false, false, false, false, known(a1), unknown),
+    'H1-use-1} {st(protected, a1, a2, a1, s2, obs(a1, b1), obs(a2, b1), false,
+    false, noHeld, false, false, false, false, known(a1), unknown), 'H2-use-0}
+    {st(protected, a1, a2, a1, s2, obs(a1, b1), obs(a2, b0), false, false,
+    noHeld, false, false, false, false, known(a1), unknown), 'H1-use-0} {st(
+    protected, a1, a2, a1, s2, obs(a1, b0), obs(a2, b0), false, false, noHeld,
+    false, false, false, false, known(a1), unknown), 'D1} {st(protected, a1,
+    a2, a1, s2, noObs, obs(a2, b0), false, false, noHeld, false, false, false,
+    false, known(a1), unknown), 'Q1} {st(protected, a1, a2, a1, s2, noObs, obs(
+    a2, b0), true, false, noHeld, true, false, false, false, known(a1),
+    unknown), 'H1-empty-0} {st(protected, a1, a2, a1, s2, obs(a1, b0), obs(a2,
+    b0), true, false, noHeld, true, false, false, false, known(a1), unknown),
+    'H1-use-1} {st(protected, a1, a2, a1, s2, obs(a1, b1), obs(a2, b0), true,
+    false, noHeld, true, false, false, false, known(a1), unknown), 'H2-use-1} {
+    st(protected, a1, a2, a1, s2, obs(a1, b1), obs(a2, b1), true, false,
+    noHeld, true, false, false, false, known(a1), unknown), 'H1-use-0} {st(
+    protected, a1, a2, a1, s2, obs(a1, b0), obs(a2, b1), true, false, noHeld,
+    true, false, false, false, known(a1), unknown), 'D1} {st(protected, a1, a2,
+    a1, s2, noObs, obs(a2, b1), true, false, noHeld, true, false, false, false,
+    known(a1), unknown), 'A1} {st(protected, a1, a2, a1, s2, noObs, obs(a2,
+    b1), false, false, noHeld, true, false, true, false, known(a1), unknown),
+    'H1-empty-0} {st(protected, a1, a2, a1, s2, obs(a1, b0), obs(a2, b1),
+    false, false, noHeld, true, false, true, false, known(a1), unknown),
+    'H1-use-1} {st(protected, a1, a2, a1, s2, obs(a1, b1), obs(a2, b1), false,
+    false, noHeld, true, false, true, false, known(a1), unknown), 'H2-use-0} {
+    st(protected, a1, a2, a1, s2, obs(a1, b1), obs(a2, b0), false, false,
+    noHeld, true, false, true, false, known(a1), unknown), 'H1-use-0} {st(
+    protected, a1, a2, a1, s2, obs(a1, b0), obs(a2, b0), false, false, noHeld,
+    true, false, true, false, known(a1), unknown), 'D1} {st(protected, a1, a2,
+    a1, s2, noObs, obs(a2, b0), false, false, noHeld, true, false, true, false,
+    known(a1), unknown), 'B1} {st(protected, a1, a2, a1, s2, noObs, obs(a2,
+    b0), false, false, held(t1), true, false, true, false, known(a1), unknown),
+    'H1-empty-0} {st(protected, a1, a2, a1, s2, obs(a1, b0), obs(a2, b0),
+    false, false, held(t1), true, false, true, false, known(a1), unknown),
+    'H1-use-1} {st(protected, a1, a2, a1, s2, obs(a1, b1), obs(a2, b0), false,
+    false, held(t1), true, false, true, false, known(a1), unknown), 'H2-use-1}
+    {st(protected, a1, a2, a1, s2, obs(a1, b1), obs(a2, b1), false, false,
+    held(t1), true, false, true, false, known(a1), unknown), 'H1-use-0} {st(
+    protected, a1, a2, a1, s2, obs(a1, b0), obs(a2, b1), false, false, held(
+    t1), true, false, true, false, known(a1), unknown), 'D1} {st(protected, a1,
+    a2, a1, s2, noObs, obs(a2, b1), false, false, held(t1), true, false, true,
+    false, known(a1), unknown), 'E1-safe} {st(protected, x, a2, a1, s2, noObs,
+    obs(a2, b1), false, false, held(t1), true, false, true, false, known(a1),
+    unknown), 'H1-empty-0} {st(protected, x, a2, a1, s2, obs(x, b0), obs(a2,
+    b1), false, false, held(t1), true, false, true, false, known(a1), unknown),
+    'H1-use-1} {st(protected, x, a2, a1, s2, obs(x, b1), obs(a2, b1), false,
+    false, held(t1), true, false, true, false, known(a1), unknown), 'H2-use-0}
+    {st(protected, x, a2, a1, s2, obs(x, b1), obs(a2, b0), false, false, held(
+    t1), true, false, true, false, known(a1), unknown), 'H1-use-0} {st(
+    protected, x, a2, a1, s2, obs(x, b0), obs(a2, b0), false, false, held(t1),
+    true, false, true, false, known(a1), unknown), 'D1} {st(protected, x, a2,
+    x, s2, noObs, obs(a2, b0), false, false, held(t1), true, false, true,
+    false, known(x), unknown), 'H1-empty-0} {st(protected, x, a2, x, s2, obs(x,
+    b0), obs(a2, b0), false, false, held(t1), true, false, true, false, known(
+    x), unknown), 'H1-use-1} {st(protected, x, a2, x, s2, obs(x, b1), obs(a2,
+    b0), false, false, held(t1), true, false, true, false, known(x), unknown),
+    'H2-use-1} {st(protected, x, a2, x, s2, obs(x, b1), obs(a2, b1), false,
+    false, held(t1), true, false, true, false, known(x), unknown), 'H1-use-0},
+    {st(protected, x, a2, x, s2, obs(x, b0), obs(a2, b1), false, false, held(
+    t1), true, false, true, false, known(x), unknown), 'D1} {st(protected, x,
+    a2, x, s2, noObs, obs(a2, b1), false, false, held(t1), true, false, true,
+    false, known(x), unknown), 'H1-empty-0})
+Bye.

@@ -1,0 +1,288 @@
+--- Coupled-BRS smart-tramway: executable finite abstraction
+--- Maude 3.5.1
+
+load model-checker.maude
+
+mod COUPLED-BRS-TRAMWAY is
+  protecting BOOL .
+
+  sorts Mode Tram Loc Bit Obs Held MaybeLoc Sys .
+  ops protected unprotected : -> Mode [ctor] .
+  ops t1 t2 : -> Tram [ctor] .
+  ops s1 a1 x a2 s2 : -> Loc [ctor] .
+  ops b0 b1 : -> Bit [ctor] .
+  op noObs : -> Obs [ctor] .
+  op obs : Loc Bit -> Obs [ctor] .
+  op noHeld : -> Held [ctor] .
+  op held : Tram -> Held [ctor] .
+  op unknown : -> MaybeLoc [ctor] .
+  op known : Loc -> MaybeLoc [ctor] .
+
+  --- st(mode, p1,p2, d1,d2, m1,m2, r1,r2, R,
+  ---    q1,q2, c1,c2, z1,z2)
+  op st : Mode Loc Loc Loc Loc Obs Obs Bool Bool Held
+          Bool Bool Bool Bool MaybeLoc MaybeLoc -> Sys [ctor] .
+
+  vars MD : Mode .
+  vars P1 P2 D1 D2 L L1 L2 : Loc .
+  vars O1 O2 : Obs .
+  vars R1 R2 Q1 Q2 C1 C2 : Bool .
+  vars H : Held .
+  vars Z1 Z2 : MaybeLoc .
+
+  --- PT-local departure: containment parent s_i becomes a_i.
+  crl [M1] :
+    st(MD, s1, P2, D1, D2, O1, O2, R1, R2, H,
+       Q1, Q2, C1, C2, Z1, Z2)
+ => st(MD, a1, P2, D1, D2, O1, O2, R1, R2, H,
+       Q1, Q2, C1, C2, Z1, Z2)
+    if P2 =/= a1 .
+
+  crl [M2] :
+    st(MD, P1, s2, D1, D2, O1, O2, R1, R2, H,
+       Q1, Q2, C1, C2, Z1, Z2)
+ => st(MD, P1, a2, D1, D2, O1, O2, R1, R2, H,
+       Q1, Q2, C1, C2, Z1, Z2)
+    if P1 =/= a2 .
+
+  --- PT-local reporting H_i. The alternating bit represents the
+  --- reusable two-identity observation pool required by Section 5.2.
+  rl [H1-empty-0] :
+    st(MD, P1, P2, D1, D2, noObs, O2, R1, R2, H,
+       Q1, Q2, C1, C2, Z1, Z2)
+ => st(MD, P1, P2, D1, D2, obs(P1, b0), O2, R1, R2, H,
+       Q1, Q2, C1, C2, Z1, Z2) .
+
+  rl [H1-empty-1] :
+    st(MD, P1, P2, D1, D2, noObs, O2, R1, R2, H,
+       Q1, Q2, C1, C2, Z1, Z2)
+ => st(MD, P1, P2, D1, D2, obs(P1, b1), O2, R1, R2, H,
+       Q1, Q2, C1, C2, Z1, Z2) .
+
+  rl [H1-use-0] :
+    st(MD, P1, P2, D1, D2, obs(L, b1), O2, R1, R2, H,
+       Q1, Q2, C1, C2, Z1, Z2)
+ => st(MD, P1, P2, D1, D2, obs(P1, b0), O2, R1, R2, H,
+       Q1, Q2, C1, C2, Z1, Z2) .
+
+  rl [H1-use-1] :
+    st(MD, P1, P2, D1, D2, obs(L, b0), O2, R1, R2, H,
+       Q1, Q2, C1, C2, Z1, Z2)
+ => st(MD, P1, P2, D1, D2, obs(P1, b1), O2, R1, R2, H,
+       Q1, Q2, C1, C2, Z1, Z2) .
+
+  rl [H2-empty-0] :
+    st(MD, P1, P2, D1, D2, O1, noObs, R1, R2, H,
+       Q1, Q2, C1, C2, Z1, Z2)
+ => st(MD, P1, P2, D1, D2, O1, obs(P2, b0), R1, R2, H,
+       Q1, Q2, C1, C2, Z1, Z2) .
+
+  rl [H2-empty-1] :
+    st(MD, P1, P2, D1, D2, O1, noObs, R1, R2, H,
+       Q1, Q2, C1, C2, Z1, Z2)
+ => st(MD, P1, P2, D1, D2, O1, obs(P2, b1), R1, R2, H,
+       Q1, Q2, C1, C2, Z1, Z2) .
+
+  rl [H2-use-0] :
+    st(MD, P1, P2, D1, D2, O1, obs(L, b1), R1, R2, H,
+       Q1, Q2, C1, C2, Z1, Z2)
+ => st(MD, P1, P2, D1, D2, O1, obs(P2, b0), R1, R2, H,
+       Q1, Q2, C1, C2, Z1, Z2) .
+
+  rl [H2-use-1] :
+    st(MD, P1, P2, D1, D2, O1, obs(L, b0), R1, R2, H,
+       Q1, Q2, C1, C2, Z1, Z2)
+ => st(MD, P1, P2, D1, D2, O1, obs(P2, b1), R1, R2, H,
+       Q1, Q2, C1, C2, Z1, Z2) .
+
+  --- Synchronization D_i: consume a stored observation, relocate D_i
+  --- to the payload location, and update controller observation z_i.
+  rl [D1] :
+    st(MD, P1, P2, D1, D2, obs(L, b0), O2, R1, R2, H,
+       Q1, Q2, C1, C2, Z1, Z2)
+ => st(MD, P1, P2, L, D2, noObs, O2, R1, R2, H,
+       Q1, Q2, C1, C2, known(L), Z2) .
+
+  rl [D1-alt] :
+    st(MD, P1, P2, D1, D2, obs(L, b1), O2, R1, R2, H,
+       Q1, Q2, C1, C2, Z1, Z2)
+ => st(MD, P1, P2, L, D2, noObs, O2, R1, R2, H,
+       Q1, Q2, C1, C2, known(L), Z2) .
+
+  rl [D2] :
+    st(MD, P1, P2, D1, D2, O1, obs(L, b0), R1, R2, H,
+       Q1, Q2, C1, C2, Z1, Z2)
+ => st(MD, P1, P2, D1, L, O1, noObs, R1, R2, H,
+       Q1, Q2, C1, C2, Z1, known(L)) .
+
+  rl [D2-alt] :
+    st(MD, P1, P2, D1, D2, O1, obs(L, b1), R1, R2, H,
+       Q1, Q2, C1, C2, Z1, Z2)
+ => st(MD, P1, P2, D1, L, O1, noObs, R1, R2, H,
+       Q1, Q2, C1, C2, Z1, known(L)) .
+
+  --- DT-local route request Q_i.
+  rl [Q1] :
+    st(MD, P1, P2, a1, D2, O1, O2, false, R2, H,
+       false, Q2, C1, C2, Z1, Z2)
+ => st(MD, P1, P2, a1, D2, O1, O2, true, R2, H,
+       true, Q2, C1, C2, Z1, Z2) .
+
+  rl [Q2] :
+    st(MD, P1, P2, D1, a2, O1, O2, R1, false, H,
+       Q1, false, C1, C2, Z1, Z2)
+ => st(MD, P1, P2, D1, a2, O1, O2, R1, true, H,
+       Q1, true, C1, C2, Z1, Z2) .
+
+  --- Synchronization A_i: consume request and set controller flag c_i.
+  rl [A1] :
+    st(MD, P1, P2, D1, D2, O1, O2, true, R2, H,
+       Q1, Q2, C1, C2, Z1, Z2)
+ => st(MD, P1, P2, D1, D2, O1, O2, false, R2, H,
+       Q1, Q2, true, C2, Z1, Z2) .
+
+  rl [A2] :
+    st(MD, P1, P2, D1, D2, O1, O2, R1, true, H,
+       Q1, Q2, C1, C2, Z1, Z2)
+ => st(MD, P1, P2, D1, D2, O1, O2, R1, false, H,
+       Q1, Q2, C1, true, Z1, Z2) .
+
+  --- PT-local reservation B_i: x must be empty and no Held exists.
+  crl [B1] :
+    st(MD, P1, P2, D1, D2, O1, O2, R1, R2, noHeld,
+       Q1, Q2, true, C2, Z1, Z2)
+ => st(MD, P1, P2, D1, D2, O1, O2, R1, R2, held(t1),
+       Q1, Q2, true, C2, Z1, Z2)
+    if P1 =/= x /\ P2 =/= x .
+
+  crl [B2] :
+    st(MD, P1, P2, D1, D2, O1, O2, R1, R2, noHeld,
+       Q1, Q2, C1, true, Z1, Z2)
+ => st(MD, P1, P2, D1, D2, O1, O2, R1, R2, held(t2),
+       Q1, Q2, C1, true, Z1, Z2)
+    if P1 =/= x /\ P2 =/= x .
+
+  --- Protected entry E^safe_i: matching Held owner and empty x.
+  crl [E1-safe] :
+    st(protected, a1, P2, D1, D2, O1, O2, R1, R2, held(t1),
+       Q1, Q2, C1, C2, Z1, Z2)
+ => st(protected, x, P2, D1, D2, O1, O2, R1, R2, held(t1),
+       Q1, Q2, C1, C2, Z1, Z2)
+    if P2 =/= x .
+
+  crl [E2-safe] :
+    st(protected, P1, a2, D1, D2, O1, O2, R1, R2, held(t2),
+       Q1, Q2, C1, C2, Z1, Z2)
+ => st(protected, P1, x, D1, D2, O1, O2, R1, R2, held(t2),
+       Q1, Q2, C1, C2, Z1, Z2)
+    if P1 =/= x .
+
+  --- Unprotected entry E^unsafe_i: no reservation and no empty-x test.
+  rl [E1-unsafe] :
+    st(unprotected, a1, P2, D1, D2, O1, O2, R1, R2, H,
+       Q1, Q2, C1, C2, Z1, Z2)
+ => st(unprotected, x, P2, D1, D2, O1, O2, R1, R2, H,
+       Q1, Q2, C1, C2, Z1, Z2) .
+
+  rl [E2-unsafe] :
+    st(unprotected, P1, a2, D1, D2, O1, O2, R1, R2, H,
+       Q1, Q2, C1, C2, Z1, Z2)
+ => st(unprotected, P1, x, D1, D2, O1, O2, R1, R2, H,
+       Q1, Q2, C1, C2, Z1, Z2) .
+
+  --- PT-local exit X_i: relocate to the opposite approach, delete Held,
+  --- and reset the corresponding controller flag.
+  crl [X1] :
+    st(MD, x, P2, D1, D2, O1, O2, R1, R2, held(t1),
+       Q1, Q2, C1, C2, Z1, Z2)
+ => st(MD, a2, P2, D1, D2, O1, O2, R1, R2, noHeld,
+       Q1, Q2, false, C2, Z1, Z2)
+    if P2 =/= a2 .
+
+  crl [X2] :
+    st(MD, P1, x, D1, D2, O1, O2, R1, R2, held(t2),
+       Q1, Q2, C1, C2, Z1, Z2)
+ => st(MD, P1, a1, D1, D2, O1, O2, R1, R2, noHeld,
+       Q1, Q2, C1, false, Z1, Z2)
+    if P1 =/= a1 .
+
+  ops initProtected initUnprotected : -> Sys .
+  eq initProtected =
+    st(protected, s1, s2, s1, s2, noObs, noObs,
+       false, false, noHeld, false, false, false, false,
+       unknown, unknown) .
+  eq initUnprotected =
+    st(unprotected, s1, s2, s1, s2, noObs, noObs,
+       false, false, noHeld, false, false, false, false,
+       unknown, unknown) .
+
+  --- Executable state predicates used by search.
+  op collision? : Sys -> Bool .
+  op posCons? : Sys -> Bool .
+  op mismatch? : Sys -> Bool .
+  eq collision?(st(MD, x, x, D1, D2, O1, O2, R1, R2, H,
+       Q1, Q2, C1, C2, Z1, Z2)) = true .
+  eq collision?(st(MD, P1, P2, D1, D2, O1, O2, R1, R2, H,
+       Q1, Q2, C1, C2, Z1, Z2)) = false [owise] .
+  eq posCons?(st(MD, P1, P2, P1, P2, O1, O2, R1, R2, H,
+       Q1, Q2, C1, C2, Z1, Z2)) = true .
+  eq posCons?(st(MD, P1, P2, D1, D2, O1, O2, R1, R2, H,
+       Q1, Q2, C1, C2, Z1, Z2)) = false [owise] .
+  eq mismatch?(st(MD, P1, P2, D1, D2, O1, O2, R1, R2, H,
+       Q1, Q2, C1, C2, Z1, Z2)) = not (P1 == D1 and P2 == D2) .
+
+endm
+
+mod COUPLED-BRS-TRAMWAY-CHECK is
+  protecting COUPLED-BRS-TRAMWAY .
+  including MODEL-CHECKER .
+  subsort Sys < State .
+  ops collision posCons mismatch : -> Prop [ctor] .
+  vars S : Sys .
+  vars MD : Mode .
+  vars P1 P2 D1 D2 : Loc .
+  vars O1 O2 : Obs .
+  vars R1 R2 Q1 Q2 C1 C2 : Bool .
+  var H : Held .
+  vars Z1 Z2 : MaybeLoc .
+  eq S |= collision = collision?(S) .
+  eq S |= posCons = posCons?(S) .
+  eq S |= mismatch = mismatch?(S) .
+  eq S |= P:Prop = false [owise] .
+endm
+
+--- Reproducible verification commands
+select COUPLED-BRS-TRAMWAY-CHECK .
+
+--- V1 protected collision freedom: expected No solution.
+search [1] initProtected =>* S:Sys such that collision?(S:Sys) .
+
+--- V2 unsafe collision reachability: expected solution at depth 4,
+--- with path labels M1 M2 E1-unsafe E2-unsafe (or symmetric order).
+search [1] initUnprotected =>* S:Sys such that collision?(S:Sys) .
+show path labels 100 .
+
+--- V3 a mismatch is reachable in the protected model.
+search [1] initProtected =>* S:Sys such that mismatch?(S:Sys) .
+show path labels 1 .
+
+--- V4 existential consistency restoration after P1 has moved to a1
+--- while D1 still records s1: expected a path using H1 and D1.
+search [1] st(protected, a1, s2, s1, s2, noObs, noObs,
+  false, false, noHeld, false, false, false, false,
+  unknown, unknown)
+  =>* S:Sys such that posCons?(S:Sys) .
+show path labels 12 .
+
+--- V5 rewriting deadlock check. H_i reporting is always enabled because
+--- fresh reusable observation identities alternate: expected No solution.
+search [1] initProtected =>! S:Sys .
+search [1] initUnprotected =>! S:Sys .
+
+--- V6 LTL safety checks over the finite reachable systems.
+red modelCheck(initProtected, [] ~ collision) .
+red modelCheck(initUnprotected, [] ~ collision) .
+
+--- V7 No unconditional liveness claim: absent fairness, universal eventual
+--- positional consistency is expected to fail (counterexample).
+red modelCheck(initProtected, [] (mismatch -> <> posCons)) .

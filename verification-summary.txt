@@ -1,0 +1,37 @@
+Validated with Maude 3.5.1.
+
+V1 Protected collision reachability
+Command: search [1] initProtected =>* S:Sys such that collision?(S:Sys) .
+Result: No solution.
+Exhaustive states reported: 1,355.
+
+V2 Unprotected collision reachability
+Command: search [1] initUnprotected =>* S:Sys such that collision?(S:Sys) .
+Result: Solution at state 100.
+Shortest displayed labels: M1 M2 E1-unsafe E2-unsafe.
+Reached PT positions: p1 = x and p2 = x.
+
+V3 Positional mismatch reachability
+Command: search [1] initProtected =>* S:Sys such that mismatch?(S:Sys) .
+Result: Solution at state 1.
+Shortest displayed label: M1.
+
+V4 Selected-state consistency restoration
+Start: p1 = a1, d1 = s1; second pair remains at s2.
+Command searches for posCons?(S) = true.
+Result: Solution at state 12.
+Shortest displayed labels: H1-empty-0 D1.
+Scope: existential witness from this selected mismatch, not universal recovery.
+
+V5 Rewriting terminal-state search
+Protected result: No solution; 1,355 states explored.
+Unprotected result: No solution; 6,675 states explored.
+Interpretation: no normal form is reachable because reporting remains enabled under the reusable finite identity pool. This is rewriting deadlock freedom, not fairness or mission progress.
+
+V6 LTL collision safety
+Protected: modelCheck(initProtected, [] ~ collision) = true.
+Unprotected: counterexample returned.
+
+V7 LTL consistency restoration
+modelCheck(initProtected, [] (mismatch -> <> posCons)) returned a counterexample.
+Interpretation: without fairness or priority assumptions, universal eventual positional consistency is not guaranteed.
